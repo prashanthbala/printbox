@@ -4,7 +4,7 @@
 
 import getopt, sys
 import os, subprocess
-import cups
+#import cups
 
 
 QUEUE = "queuetemp" # name of temporary queueing and swap space.
@@ -26,7 +26,7 @@ def main():
 
     # Parse the options
     for o, a in opts:
-        #print "option[", o, ']','[',a,']'
+        print "option[", o, ']','[',a,']'
         if o in ('a', "--andrew"):
             andrewId = a
         elif o in ('p', "--path"):
