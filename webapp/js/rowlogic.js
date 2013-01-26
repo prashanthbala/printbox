@@ -241,6 +241,9 @@ function delListItem(rowId){
     return;
 }
 
+function saveAndrew() {
+    model["andrewId"]=$("#idandrew")[0].value;
+}
 
 function printFile(fileId) {
     // Send the POST request
