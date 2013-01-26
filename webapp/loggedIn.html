@@ -34,18 +34,34 @@
 <br><br><br><br><br><br><br>
 <div style="width:500px; margin-left: auto; margin-right: auto;">
     <div id="filetable" class="nav nav-list">
-        <li><a href="#"><div class="tblrow"><img src="icons/sample.jpg"><h5>Filename1</h5>
-                  <button class="btn btn-success" id="one" type="button" >Print</button>
-                  <button class="btn btn-danger"  id="two" type="button" >Delete</button></div></a>
-        </li>
-        <li><a href="#"><div class="tblrow"><img src="icons/sample.jpg"><h5>Filename2</h5>
-                  <button class="btn btn-success" type="button">Print</button>
-                  <button class="btn btn-danger" type="button">Delete</button></div></a>
-        </li>
-        <li><a href="#"><div class="tblrow"><img src="icons/sample.jpg"><h5>Filename3</h5>
-                  <button class="btn btn-success" type="button">Print</button>
-                  <button class="btn btn-danger" type="button">Delete</button></div></a>
-        </li>
+        <script>
+        /*
+        $.ajaxSetup ({
+        cache: false
+        });
+        
+        $.ajax({
+        url: jsonUrl,
+        type: "GET",
+        data: dataToSend,
+        dataType: 'json',
+        success: function(json){
+        // do stuff with json (in this case an array)
+          makeRows(json);
+        },
+        error: function() {
+          error();
+        },
+        });
+        */
+        var jsonObj = {"files": [
+                      {"filename": "file1", "filetype": "text"},
+                      {"filename": "file2", "filetype": "image"},
+                      {"filename": "file3", "filetype": "multimedia"}]
+                      };
+        var myFiles = JSON.parse(jsonObj);
+        makeRows(myFiles);
+        </script>
     </div>
 </div>
 <br><br><br>
