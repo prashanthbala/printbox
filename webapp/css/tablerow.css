@@ -1,0 +1,12 @@
+.tblrow {
+display:inline;
+}
+.tblrow button{
+float:right;
+margin-top:30px;
+margin-right:7px;
+}
+.tblrow h5{
+display:inline;
+margin-left:40px
+}
