@@ -7,7 +7,7 @@ var makeRows = function(myDocs){
       else if (myDocs[i].mime_type === "text"){
           ftype = "text";
       }
-      else (myDocs[i].mime_type === "multimedia"){
+      else if (myDocs[i].mime_type === "multimedia"){
           ftype = "multimedia";
       }
       document.write("<li><a href='#'>" + 
