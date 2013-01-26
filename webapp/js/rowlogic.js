@@ -1,8 +1,10 @@
 // bind the functions
-var makeRows = makeRowFunction(myDocs);
-var error = errorFn(); //
-var print = printFn(); // POST to web interface.
-    function makeRowFn(myDocs){
+var makeRows = makeRowFn;
+var error = errorFn; //
+var print = printFn; // POST to web interface.
+var del = delRow;
+
+function makeRowFn(myDocs){
     if (myDocs.length > 0){
         $("#empty").hide();
     }
@@ -41,8 +43,8 @@ function errorFn(){
 }
 
 
-function(objId){
-    var printButton = $("#row"+objId+" a .tblrow button.print");
+function printFn(rowId){
+    var printButton = $("#row"+rowId+" a .tblrow button.print");
     printButton.hide();
     printButton.text("Print Again");
     printButton.addClass("btn-primary").removeClass("btn-success");
@@ -55,20 +57,19 @@ function(objId){
     return;
 }
 
-var del = function(objId){
+function delRow(rowId){
     // When displaying "are you sure", add sure class, which you will
     //  then check for when you delete.
-    var delButton = $("#row"+objId+" a .tblrow button.delete");
-    var delRow = $("#row"+objId)
+    var delButton = $("#row"+rowId+" a .tblrow button.delete");
+    var delRow = $("#row"+rowId)
 
-    if($("#row"+objId+" a .tblrow button.sure").length == 1) {
+    if($("#row"+rowId+" a .tblrow button.sure").length == 1) {
         delRow.slideUp("slow", null);
     } else {
         delButton.hide();
         delButton.text("Are you sure?");
         delButton.addClass("btn-warning sure").removeClass("btn-danger");
         delButton.fadeIn("slow");
-
     }
     //printButton.fadeIn("slow");
 
