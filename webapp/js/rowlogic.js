@@ -56,6 +56,8 @@ var makeRowsMobile = function(myDocs){
                      i.toString() + "\")'>Delete</button></div></a></li>");
     };
     return;
+}
+
 // Initialize the page.
 function init() {
     // Populate the model
@@ -173,7 +175,13 @@ function delRow(rowId){
     var delRow = $("#row"+rowId)
 
     if($("#row"+rowId+" a .tblrow button.sure").length == 1) {
-        delRow.slideUp("slow", null);
+        delRow.slideUp("slow", function() {
+            document.getElementById("row"+rowId).style.display='none';
+            //document.getElementById("row"+rowId).removeChild();
+            console.log($(".tblrow").length);
+            });
+
+        // TODO: remove row from model
     } else {
         delButton.hide();
         delButton.text("Are you sure?");
@@ -183,8 +191,9 @@ function delRow(rowId){
     //printButton.fadeIn("slow");
 
     if ($(".tblrow").length <= 0) {
+        console.log("no more items!");
         $("#empty").show();
     }
-    //document.getElementById(objId).style.display = 'none'; 
+    //
     return;
 }
