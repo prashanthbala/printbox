@@ -1,3 +1,4 @@
+
 // bind the functions
 var init = init;
 var makeRows = makeRowFn;
@@ -5,26 +6,82 @@ var error = errorFn; //
 var print = printFn; // POST to web interface.
 var del = delRow;
 
+
+var FORGEDATA = true;
+var fakeData = '[{"path":"cover.jpg","is_dir":false,"mime_type":"image/jpeg"},{"path":"hw1 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw1.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw3.pdf","is_dir":false,"mime_type":"application/pdf"}]';
+
 var model = {
     "andrewId":null,
+    "printingEnabled":false,
     "rows": []
 };
-
+// Fields a row will have
 var modelRow = {
     "rowId":null,
     "path":null,
-    "mime-type":null,
+    "mime_type":null,
 
     "sureToDelete":false
 
 }
+
+
+var makeRowsMobile = function(myDocs){
+    if (myDocs.length > 0){
+        $("#empty").hide();
+    }
+    for (var i=0; i<myDocs.length; i++){
+      var ftype = "unknown";
+      if (myDocs[i].mime_type === "application/msword" || myDocs[i].mime_type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
+          ftype = "msftword";
+      }
+      else if (myDocs[i].mime_type === "text/plain"){
+          ftype = "text";
+      }
+      else if (myDocs[i].mime_type.substring(0,6) === "image/"){
+          ftype = "image";
+      }
+      else if (myDocs[i].mime_type === "application/pdf" || myDocs[i].mime_type === "application/x-pdf"){
+          ftype = "pdf";
+      }
+      else if (myDocs[i].mime_type === "application/vnd.ms-powerpoint" || myDocs[i].mime_type === "pplication/vnd.openxmlformats-officedocument.presentationml.presentation"){
+          ftype = "msftppt";
+      }
+      document.write("<li id='row" + i.toString() +
+                     "'><a href='#'>" + 
+                     "<div class='tblrow'><img class='file-thumbnail' src='icons/" + ftype +
+                     ".jpg'><h5>" + myDocs[i].path + 
+                     "</h5><button class='print btn btn-success' type='button' onclick='print(\"" +
+                     i.toString() + "\")'>Print</button>" +
+                     "<button class='delete btn btn-danger' type='button' onclick='del(\"" +
+                     i.toString() + "\")'>Delete</button></div></a></li>");
+    };
+    return;
+
 // Initialize the page.
+$(document).ready(function() {
+    $.ajaxSetup ({
+      cache: false
+    });
+
+    var serverUrl = "http://printbox.servebeer.com:9000"
+
+    /* $.ajax({
+        url: serverUrl,
+        type: "GET",
+        success: function(json) {
+          populateModel(json);
+        },
+        error: function(err){
+          console.log("oh nooo");
+          console.log(err);
+        }
+    }); */
+}) 
 
 function init() {
     // Populate the model
-    $.ajaxSetup ({
-     cache: false
-     });
+
     $.ajax({
         type: "GET",
         url: "http://printbox.servebeer.com:9000/",
@@ -35,17 +92,48 @@ function init() {
             }
         },*/
         dataType: "json",
-        success: populateModel
+        success: nextFn
     });
+
+    if(FORGEDATA == true) {
+        nextFn(fakeData);
+    }
 
     return model;
 }
 
-function populateModel(jsonString) {
-    console.log("called!");
-    var fileArray = json.parse(jsonString);
-    console.log(fileArray);
+function nextFn(jsonString) {
+    // Populate model
+    populateModel(jsonString);
 
+    // Add rows
+    makeRows(model["rows"]);
+}
+
+
+function populateModel(jsonString) {
+    console.log("populate!");
+    var fileArray = JSON.parse(jsonString);
+    console.log("called! got json : " + jsonString);
+    var fileArray = json.parse(jsonString);
+
+    console.log(fileArray);
+    for(var i = 0; i < fileArray.length; i++) {
+        addRowToModel(fileArray[i], i);
+    }
+    console.log("complete!");
+    console.log(model["rows"]);
+}
+
+// Takes a file, adds it to the model
+// {"path":"cover.jpg","is_dir":false,"mime_type":"image/jpeg"}
+function addRowToModel(fileElem, rowId) {
+    var newRow = {};
+    newRow["rowId"]=rowId;
+    newRow["path"]=fileElem["path"];
+    newRow["mime_type"]=fileElem["mime_type"];
+    newRow["sureToDelete"]=false;
+    model["rows"].push(newRow);
 }
 
 function makeRowFn(myDocs){
@@ -116,8 +204,6 @@ function delRow(rowId){
         delButton.fadeIn("slow");
     }
     //printButton.fadeIn("slow");
-
-
 
     if ($(".tblrow").length <= 0) {
         $("#empty").show();
