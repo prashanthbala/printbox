@@ -5,21 +5,25 @@ var error = errorFn; //
 var print = printFn; // POST to web interface.
 var del = delRow;
 
+var FORGEDATA = true;
+var fakeData = '[{"path":"cover.jpg","is_dir":false,"mime_type":"image/jpeg"},{"path":"hw1 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw1.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw3.pdf","is_dir":false,"mime_type":"application/pdf"}]';
+
+
 var model = {
     "andrewId":null,
+    "printingEnabled":false,
     "rows": []
 };
-
+// Fields a row will have
 var modelRow = {
     "rowId":null,
     "path":null,
-    "mime-type":null,
+    "mime_type":null,
 
     "sureToDelete":false
 
 }
 // Initialize the page.
-
 function init() {
     // Populate the model
     $.ajaxSetup ({
@@ -35,17 +39,45 @@ function init() {
             }
         },*/
         dataType: "json",
-        success: populateModel
+        success: nextFn
     });
+
+    if(FORGEDATA == true) {
+        nextFn(fakeData);
+    }
 
     return model;
 }
 
-function populateModel(jsonString) {
-    console.log("called!");
-    var fileArray = json.parse(jsonString);
-    console.log(fileArray);
+function nextFn(jsonString) {
+    // Populate model
+    populateModel(jsonString);
 
+    // Add rows
+    makeRows(model["rows"]);
+}
+
+
+function populateModel(jsonString) {
+    console.log("populate!");
+    var fileArray = JSON.parse(jsonString);
+    console.log(fileArray);
+    for(var i = 0; i < fileArray.length; i++) {
+        addRowToModel(fileArray[i], i);
+    }
+    console.log("complete!");
+    console.log(model["rows"]);
+}
+
+// Takes a file, adds it to the model
+// {"path":"cover.jpg","is_dir":false,"mime_type":"image/jpeg"}
+function addRowToModel(fileElem, rowId) {
+    var newRow = {};
+    newRow["rowId"]=rowId;
+    newRow["path"]=fileElem["path"];
+    newRow["mime_type"]=fileElem["mime_type"];
+    newRow["sureToDelete"]=false;
+    model["rows"].push(newRow);
 }
 
 function makeRowFn(myDocs){
