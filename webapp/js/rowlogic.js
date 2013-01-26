@@ -25,6 +25,7 @@ var modelRow = {
 
 }
 
+
 var makeRowsMobile = function(myDocs){
     if (myDocs.length > 0){
         $("#empty").hide();
@@ -56,12 +57,31 @@ var makeRowsMobile = function(myDocs){
                      i.toString() + "\")'>Delete</button></div></a></li>");
     };
     return;
+
 // Initialize the page.
+$(document).ready(function() {
+    $.ajaxSetup ({
+      cache: false
+    });
+
+    var serverUrl = "http://printbox.servebeer.com:9000"
+
+    /* $.ajax({
+        url: serverUrl,
+        type: "GET",
+        success: function(json) {
+          populateModel(json);
+        },
+        error: function(err){
+          console.log("oh nooo");
+          console.log(err);
+        }
+    }); */
+}) 
+
 function init() {
     // Populate the model
-    $.ajaxSetup ({
-     cache: false
-     });
+
     $.ajax({
         type: "GET",
         url: "http://printbox.servebeer.com:9000/",
@@ -94,6 +114,9 @@ function nextFn(jsonString) {
 function populateModel(jsonString) {
     console.log("populate!");
     var fileArray = JSON.parse(jsonString);
+    console.log("called! got json : " + jsonString);
+    var fileArray = json.parse(jsonString);
+
     console.log(fileArray);
     for(var i = 0; i < fileArray.length; i++) {
         addRowToModel(fileArray[i], i);
