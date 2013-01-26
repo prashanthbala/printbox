@@ -8,39 +8,45 @@
     <title>PrintBox</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="screen">
+    <link href="css/tablerow.css" rel="stylesheet" type="text/css" media="screen">
 </head>
 <body>
 
 <!-- Start Web App-->
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
-        <ul class="nav pull-left">
-        </ul>
         <div class="container" style="width: auto;"><br>
                 <ul class="nav pull-left">
-                <ul class="nav">
                     <li><h2><font color="white">&nbsp;&nbsp;&nbsp;Print Box</font></h2></li>
                     <li><a href="#"><h4><font color="white">Home</font></h4></a></li>
                     <li><a href="#"><h4>About</h4></a></li>
                     <li><a href="#"><h4>Help</h4></a></li>
                 </ul>
-                </ul>
-            <ul class="nav pull-right">
-                <li><a href="#"><h4>Logout</h4></a></li>
+                <ul class="nav pull-right">
+                <li><a href="loggedOut.html"><h4>Logout</h4></a></li>
                 <li><a href="#"><h4><font color="white">Username</font></h4></a></li>                    
                 <li>&nbsp;&nbsp;&nbsp;</li>
-            </ul>
+                </ul>
         </div>
     </div>
 </div>
 <br><br><br><br><br>
 <div style="width:500px; margin-left: auto; margin-right: auto;">
     <div id="filetable" class="nav nav-list">
-        <li><a href="#"><img src="icons/sample.jpg">&nbsp;&nbsp;&nbsp;F1</a></li>
-        <li><a href="#"><img src="icons/sample.jpg">&nbsp;&nbsp;&nbsp;Filename2</a></li>
-        <li><a href="#"><img src="icons/sample.jpg">&nbsp;&nbsp;&nbsp;Filename3</a></li>
+        <li><a href="#"><div class="tblrow"><img src="icons/sample.jpg"><h5>Filename1</h5>
+                  <button class="btn btn-primary" type="button">Print</button>
+                  <button class="btn btn-danger" type="button">Delete</button></div></a>
+        </li>
+        <li><a href="#"><div class="tblrow"><img src="icons/sample.jpg"><h5>Filename2</h5>
+                  <button class="btn btn-primary" type="button">Print</button>
+                  <button class="btn btn-danger" type="button">Delete</button></div></a>
+        </li>
+        <li><a href="#"><div class="tblrow"><img src="icons/sample.jpg"><h5>Filename3</h5>
+                  <button class="btn btn-primary" type="button">Print</button>
+                  <button class="btn btn-danger" type="button">Delete</button></div></a>
+        </li>
     </div>
-</div
+</div>
 <br><br><br>
 
 <div class="pagination" align="center">
@@ -52,10 +58,6 @@
         <li><a href="#">Next</a></li>
     </ul>
 </div>
-
-
 <!-- End Web App -->
-
-
 </body>
 </html>
