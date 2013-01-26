@@ -20,38 +20,49 @@
     <div class="navbar-inner">
         <div class="container" style="width: auto;"><br>
                 <ul class="nav pull-left">
-                    <li>&nbsp;&nbsp;&nbsp;<img src="img/PrintBoxTitle.fw.png"></li>                    
+                    <li>&nbsp;&nbsp;&nbsp;<img src="img/PrintBoxTitle.fw.png" height="90" width="90"></li>                    
                 </ul>
                 <ul class="nav pull-right">
-                    <li><a href="home.html"><h4>Home</h4></a></li>
-                    <li><a href="print.html"><h4><font color="white">Print</font></h4></a></li>
-                    <li><a href="about.html"><h4>About</h4></a></li>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="print.html"><font color="white">Print</font></a></li>
+                    <li><a href="about.html">About</a></li>
                 </ul>
         </div>
     </div>
 </div>
 <br><br><br><br><br><br><br>
-<div style="width:700px; margin-left: auto; margin-right: auto;">
+
+<!-- 
+<li id='row1'><a href='#'>
+<div class='tblrow'><img class='file-thumbnail' src='icons/unknown.jpg'>
+<h5>filename</h5>
+<button class='print btn btn-success' type='button' onclick='print("row1")'>Print</button>
+<button class='delete btn btn-danger' type='button' onclick='del("row1")'>Delete</button>
+</div></a></li>
+-->
+
+<div style="width:300px; margin-left: auto; margin-right: auto;">
     <div id="filetable" class="nav nav-list">
-    <!--
-    <div id="empty" align="center">
-      <img src="icons/empty.jpg">
-     </div> -->
-     <li id='row1'><a href='#'><div class='tblrow'>
-     <img class='file-thumbnail' src='icons/unknown.jpg'>
-     <h5>filename</h5>
-     <div id='slider3' class='swipe'>
-     <ul>
-     <li style='display:none'><div>Delete</div></li>
-     <li style='display:block'><div>Default</div></li>
-     <li style='display:none'><div>Print</div></li>
-     </ul>
+     <div id='slider' class='swipe'>
+         <ul>
+         <li style='display:none'>
+            <div onclick='del("slider")'>Delete</div>
+         </li>
+         <li style='display:block'>
+            <div><img class='file-thumbnail' src='icons/unknown.jpg'>
+            </div>
+         </li>
+         <li style='display:none'>
+            <div onclick='print("slider")'>Print</button>
+            </div>
+         </li>
+         </ul>
      </div>
-     <a href='#' onclick='slider3.prev();return false;'>prev</a> 
-     <a href='#' onclick='slider3.next();return false;'>next</a>
      <script>
-      var slider3 = new Swipe(document.getElementById('slider3'));
+      var slider = new Swipe(document.getElementById('slider'), {startSlide:1});
      </script>
+     <a href='#' onclick='slider.prev();return false;'>prev</a> 
+     <a href='#' onclick='slider.next();return false;'>next</a>
      </li>
      <script>
         /*

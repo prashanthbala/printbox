@@ -42,7 +42,7 @@ var makeRowsMobile = function(myDocs){
       else if (myDocs[i].mime_type === "application/pdf" || myDocs[i].mime_type === "application/x-pdf"){
           ftype = "pdf";
       }
-      else if (myDocs[i].mime_type === "application/vnd.ms-powerpoint" || myDocs[i].mime_type === "pplication/vnd.openxmlformats-officedocument.presentationml.presentation"){
+      else if (myDocs[i].mime_type === "application/vnd.ms-powerpoint" || myDocs[i].mime_type === "application/vnd.openxmlformats-officedocument.presentationml.presentation"){
           ftype = "msftppt";
       }
       document.write("<li id='row" + i.toString() +
@@ -55,7 +55,6 @@ var makeRowsMobile = function(myDocs){
                      i.toString() + "\")'>Delete</button></div></a></li>");
     };
     return;
-
 }
 
 // Initialize the page.
