@@ -1,12 +1,17 @@
 .tblrow {
 display:inline;
 }
-.tblrow button{
+li button{
 float:right;
 margin-top:30px;
 margin-right:7px;
+visibility: hidden;
 }
 .tblrow h5{
 display:inline;
 margin-left:40px
+}
+
+li:hover button{
+  visibility: visible;
 }
