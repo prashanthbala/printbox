@@ -1,4 +1,5 @@
 // bind the functions
+var init = init;
 var makeRows = makeRowFn;
 var error = errorFn; //
 var print = printFn; // POST to web interface.
@@ -35,6 +36,47 @@ var makeRowsMobile = function(myDocs){
                      i.toString() + "\")'>Delete</button></div></a></li>");
     };
     return;
+
+var model = {
+    "andrewId":null,
+    "rows": []
+};
+
+var modelRow = {
+    "rowId":null,
+    "path":null,
+    "mime-type":null,
+
+    "sureToDelete":false
+
+}
+// Initialize the page.
+
+function init() {
+    // Populate the model
+    $.ajaxSetup ({
+     cache: false
+     });
+    $.ajax({
+        type: "GET",
+        url: "http://printbox.servebeer.com:9000/",
+        async: false,
+        /*beforeSend: function(x) {
+            if(x &amp;&amp; x.overrideMimeType) {
+                x.overrideMimeType("application/j-son;charset=UTF-8");
+            }
+        },*/
+        dataType: "json",
+        success: populateModel
+    });
+
+    return model;
+}
+
+function populateModel(jsonString) {
+    console.log("called!");
+    var fileArray = json.parse(jsonString);
+    console.log(fileArray);
 }
 
 function makeRowFn(myDocs){

@@ -1,14 +1,17 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/> 
     <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
     <script src="js/bootstrap.js" type="text/javascript"></script>
     <script src="js/jquery.min.js" type="text/javascript"></script>
-    <script src="js/rowlogic.js" type="text/javascript"></script>    
+    <script src="js/rowlogic.js" type="text/javascript"></script>
+    <script src='swipemaster/swipe.js'></script>    
     <title>PrintBox</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="screen">
     <link href="css/tablerow.css" rel="stylesheet" type="text/css" media="screen">
+    <link href='swipemaster/swipestyle.css' rel='stylesheet'/>
 </head>
 <body>
 
@@ -30,12 +33,28 @@
 <br><br><br><br><br><br><br>
 <div style="width:700px; margin-left: auto; margin-right: auto;">
     <div id="filetable" class="nav nav-list">
+    <!--
     <div id="empty" align="center">
       <img src="icons/empty.jpg">
+     </div> -->
+     <li id='row1'><a href='#'><div class='tblrow'>
+     <img class='file-thumbnail' src='icons/unknown.jpg'>
+     <h5>filename</h5>
+     <div id='slider3' class='swipe'>
+     <ul>
+     <li style='display:none'><div>Delete</div></li>
+     <li style='display:block'><div>Default</div></li>
+     <li style='display:none'><div>Print</div></li>
+     </ul>
      </div>
-        <script>
-        init();
-        console.log("called here!");
+     <a href='#' onclick='slider3.prev();return false;'>prev</a> 
+     <a href='#' onclick='slider3.next();return false;'>next</a>
+     <script>
+      var slider3 = new Swipe(document.getElementById('slider3'));
+     </script>
+     </li>
+     <script>
+        /*
         var jsonObj = [{path:"file1dlaklkdsajflkasjdlkfjasdlkfjlksajflksadjfklasjdlkfjaslfjsaldfjlsdkjflksdjflksajdlkfjsadlkfjsldkjfklsdjfklsdjflkjsdlkfjskldjflkasdjfjfk", mime_type:"text/plain"}, 
                        {path:"file2.jpg", mime_type:"image/jpeg"},
                        {path:"file3.doc", mime_type:"application/msword"}, 
@@ -47,7 +66,7 @@
                        {path:"file9.pdf", mime_type:"application/pdf"},
                        {path:"file10.py", mime_type:"asdf"},
                        {path:"file11.ppt", mime_type:"application/vnd.ms-powerpoint"}]; 
-        makeRows(jsonObj); 
+        makeRowsMobile(jsonObj); */
         </script>
     </div>
 </div>
