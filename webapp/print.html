@@ -29,8 +29,11 @@
     </div>
 </div>
 <br><br><br><br><br><br><br>
-<div style="width:500px; margin-left: auto; margin-right: auto;">
+<div style="width:700px; margin-left: auto; margin-right: auto;">
     <div id="filetable" class="nav nav-list">
+    <div id="empty" align="center">
+      <img src="icons/empty.jpg">
+     </div>
         <script>
         /*
         $.ajaxSetup ({
@@ -51,22 +54,20 @@
         },
         });
         */
-        var jsonObj = [{path:"file1", mime_type:"blah"}, {path:"file2", mime_type:"blah"},
-        {path:"file3", mime_type:"blah"}, {path:"file4", mime_type:"blah"}]; 
-        makeRows(jsonObj);
+        var jsonObj = [{path:"file1dlaklkdsajflkasjdlkfjasdlkfjlksajflksadjfklasjdlkfjaslfjsaldfjlsdkjflksdjflksajdlkfjsadlkfjsldkjfklsdjfklsdjflkjsdlkfjskldjflkasdjfjfk", mime_type:"text/plain"}, 
+                       {path:"file2.jpg", mime_type:"image/jpeg"},
+                       {path:"file3.doc", mime_type:"application/msword"}, 
+                       {path:"file4.pdf", mime_type:"application/pdf"},
+                       {path:"file5.cpp", mime_type:"asdf"},
+                       {path:"file6.ppt", mime_type:"application/vnd.ms-powerpoint"},
+                       {path:"file7.gif", mime_type:"image/jpeg"},
+                       {path:"file8.docx", mime_type:"application/msword"}, 
+                       {path:"file9.pdf", mime_type:"application/pdf"},
+                       {path:"file10.py", mime_type:"asdf"},
+                       {path:"file11.ppt", mime_type:"application/vnd.ms-powerpoint"}]; 
+        makeRows(jsonObj); 
         </script>
     </div>
-</div>
-<br><br><br>
-
-<div class="pagination" align="center">
-    <ul>
-        <li><a href="#">Prev</a></li>
-        <li><a href="#">1</a></li>
-        <li><a href="#">2</a></li>
-        <li><a href="#">3</a></li>
-        <li><a href="#">Next</a></li>
-    </ul>
 </div>
 <!-- End Web App -->
 </body>

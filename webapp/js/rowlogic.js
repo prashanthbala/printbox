@@ -1,23 +1,56 @@
 var makeRows = function(myDocs){
+    if (myDocs.length > 0){
+        $("#empty").hide();
+    }
     for (var i=0; i<myDocs.length; i++){
-      var ftype = "sample";
-      if (myDocs[i].mime_type === "image"){
-          ftype = "image";
+      var ftype = "unknown";
+      if (myDocs[i].mime_type === "application/msword" || myDocs[i].mime_type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"){
+          ftype = "msftword";
       }
-      else if (myDocs[i].mime_type === "text"){
+      else if (myDocs[i].mime_type === "text/plain"){
           ftype = "text";
       }
-      else if (myDocs[i].mime_type === "multimedia"){
-          ftype = "multimedia";
+      else if (myDocs[i].mime_type.substring(0,6) === "image/"){
+          ftype = "image";
       }
-      document.write("<li><a href='#'>" + 
-                     "<div class='tblrow'><img src='icons/" + ftype + ".jpg'><h5>" + 
-                     myDocs[i].path + 
-                     "</h5><button class='btn btn-success' type='button'>Print</button>" +
-                     "<button class='btn btn-danger' type='button'>Delete</button></div></a></li>");
-    }
+      else if (myDocs[i].mime_type === "application/pdf" || myDocs[i].mime_type === "application/x-pdf"){
+          ftype = "pdf";
+      }
+      else if (myDocs[i].mime_type === "application/vnd.ms-powerpoint" || myDocs[i].mime_type === "pplication/vnd.openxmlformats-officedocument.presentationml.presentation"){
+          ftype = "msftppt";
+      }
+      document.write("<li id='" + i.toString() + 
+                     "'><a href='#'>" + 
+                     "<div class='tblrow'><img class='file-thumbnail' src='icons/" + ftype + 
+                     ".jpg'><h5>" + myDocs[i].path + 
+                     "</h5><button class='btn btn-success' type='button' onclick='print(\"" + 
+                     i.toString() + "\")'>Print</button>" +
+                     "<button class='btn btn-danger' type='button' onclick='del(\"" + 
+                     i.toString() + "\")'>Delete</button></div></a></li>");
+    };
     return;
-}   
+}
+
 var error = function(){
   document.write("<li>Super Sad Faces Everywhere</li>");
+  return;
+}
+
+
+var print = function(objId){
+    $("#"+objId).remove();
+    if ($(".tblrow").length <= 0) {
+        $("#empty").show();
+    }
+    //document.getElementById(objId).style.display = 'none'; 
+    return;
+}
+
+var del = function(objId){
+    $("#"+objId).remove();
+    if ($(".tblrow").length <= 0) {
+        $("#empty").show();
+    }
+    //document.getElementById(objId).style.display = 'none'; 
+    return;
 }
