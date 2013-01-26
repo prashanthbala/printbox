@@ -7,7 +7,7 @@ import os, subprocess
 #import cups
 
 
-QUEUE = "queuetemp" # name of temporary queueing and swap space.
+#QUEUE = "queuetemp" # name of temporary queueing and swap space.
 TEST_FILE = "helloprinter.txt"
 def main():
     try:
@@ -39,7 +39,7 @@ def main():
     assert( andrewId != '-1' and filepath != '-1')
     # Print the file
     # Check that there is a folder
-    assert(os.path.isdir(os.path.join(os.getcwd(), QUEUE)))
+    assert(os.path.exists(filepath))
 
     # Set up the printer
     #conn = cups.Connection()
