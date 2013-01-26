@@ -3,15 +3,13 @@
 var init = init;
 var makeRows = makeRowFn;
 var error = errorFn; //
-var print = printFn; // POST to web interface.
-var del = delRow;
 
 
 var FORGEDATA = false;
 var fakeData = '[{"path":"cover.jpg","is_dir":false,"mime_type":"image/jpeg"},{"path":"hw1 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw1.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw3.pdf","is_dir":false,"mime_type":"application/pdf"}]';
 
 var model = {
-    "andrewId":null,
+    "andrewId":"msebek",
     "printingEnabled":false,
     "rows": []
 };
@@ -53,7 +51,7 @@ var makeRowsMobile = function(myDocs){
                      ".jpg'><h5>" + myDocs[i].path + 
                      "</h5><button class='print btn btn-success' type='button' onclick='print(\"" +
                      i.toString() + "\")'>Print</button>" +
-                     "<button class='delete btn btn-danger' type='button' onclick='del(\"" +
+                     "<button class='delete btn btn-danger' type='button' onclick='delListItem(\"" +
                      i.toString() + "\")'>Delete</button></div></a></li>");
     };
     return;
@@ -150,9 +148,9 @@ function makeRowFn(myDocs){
                      "'><a href='#'>" + 
                      "<div class='tblrow'><img class='file-thumbnail' src='icons/" + ftype +
                      ".jpg'><h5>" + myDocs[i].path + 
-                     "</h5><button class='print btn btn-success' type='button' onclick='print(\"" +
+                     "</h5><button class='print btn btn-success' type='button' onclick='printFile(\"" +
                      i.toString() + "\")'>Print</button>" +
-                     "<button class='delete btn btn-danger' type='button' onclick='del(\"" +
+                     "<button class='delete btn btn-danger' type='button' onclick='delListItem(\"" +
                      i.toString() + "\")'>Delete</button></div></a></li>");
     };
     return;
@@ -170,7 +168,7 @@ function printFn(rowId){
     printButton.text("Print Again");
     printButton.addClass("btn-primary").removeClass("btn-success");
     printButton.fadeIn("slow");
-    //var whatwewant = search
+
     if ($(".tblrow").length <= 0) {
         $("#empty").show();
     }
@@ -178,18 +176,54 @@ function printFn(rowId){
     return;
 }
 
-function delRow(rowId){
+function getRowFromFileId(fileId) {
+    rows = model["rows"];
+    for(var i=0; i < rows.length; i++) {
+        if(rows[i]["rowId"]==fileId) {
+            return rows[i]
+        }
+    }
+    return null
+}
+
+function deleteFile(fileId) {
+    // Send the POST request
+    console.log("[delete issued]");
+    var file = getRowFromFileId(fileId);
+    //console.log(fileId);
+    //console.log(file);
+    console.log(file["path"]);
+    $.ajax({
+        type: "POST",
+        url: "http://printbox.servebeer.com:9000/delete/"+file["path"],
+        async: false,
+        dataType: "json",
+        success: function() {console.log("delete sent!")},
+        error: function(err){
+            console.log("something bad");
+            console.log(err)}
+    });
+
+    // Update the model
+
+
+}
+
+
+function delListItem(rowId){
     // When displaying "are you sure", add sure class, which you will
     //  then check for when you delete.
     var delButton = $("#row"+rowId+" a .tblrow button.delete");
     var delRow = $("#row"+rowId)
 
+    console.log($("#row"+rowId+" a .tblrow button.sure"));
     if($("#row"+rowId+" a .tblrow button.sure").length == 1) {
         delRow.slideUp("slow", function() {
             document.getElementById("row"+rowId).style.display='none';
             //document.getElementById("row"+rowId).removeChild();
             console.log($(".tblrow").length);
-            });
+            deleteFile(rowId);
+        });
 
         // TODO: remove row from model
     } else {
@@ -204,6 +238,32 @@ function delRow(rowId){
         console.log("no more items!");
         $("#empty").show();
     }
-    //
+
     return;
+}
+
+
+function printFile(fileId) {
+    // Send the POST request
+    console.log("[print issued]");
+    var file = getRowFromFileId(fileId);
+    //console.log(fileId);
+    //console.log(file);
+    console.log("http://printbox.servebeer.com:9000/print/"+
+        model["andrewId"]+"/"+file["path"]);
+    $.ajax({
+        type: "POST",
+        url: "http://printbox.servebeer.com:9000/print/"+
+            model["andrewId"]+"/"+file["path"],
+        async: false,
+        dataType: "json",
+        success: function() {console.log("[print sent!]")},
+        error: function(err){
+            console.log("something bad in print");
+            console.log(err)}
+    });
+
+    // Update the model
+
+
 }
