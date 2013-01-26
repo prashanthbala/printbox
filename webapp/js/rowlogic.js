@@ -1,4 +1,8 @@
-var makeRows = function(myDocs){
+// bind the functions
+var makeRows = makeRowFunction(myDocs);
+var error = errorFn(); //
+var print = printFn(); // POST to web interface.
+    function makeRowFn(myDocs){
     if (myDocs.length > 0){
         $("#empty").hide();
     }
@@ -31,13 +35,13 @@ var makeRows = function(myDocs){
     return;
 }
 
-var error = function(){
+function errorFn(){
   document.write("<li>Super Sad Faces Everywhere</li>");
   return;
 }
 
 
-var print = function(objId){
+function(objId){
     var printButton = $("#row"+objId+" a .tblrow button.print");
     printButton.hide();
     printButton.text("Print Again");
