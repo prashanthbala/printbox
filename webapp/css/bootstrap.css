@@ -796,7 +796,11 @@ ol {
   padding: 0;
   margin: 0 0 10px 25px;
 }
-
+#thumbnails.about{
+  margin-left:300px;
+  padding: 300px;
+  font-size:5px;
+}
 ul ul,
 ul ol,
 ol ol,
