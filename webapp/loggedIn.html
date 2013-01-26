@@ -35,32 +35,30 @@
 <div style="width:500px; margin-left: auto; margin-right: auto;">
     <div id="filetable" class="nav nav-list">
         <script>
-        /*
         $.ajaxSetup ({
         cache: false
         });
         
         $.ajax({
-        url: jsonUrl,
+        url: "http://128.237.118.100:9000/",
         type: "GET",
-        data: dataToSend,
         dataType: 'json',
         success: function(json){
         // do stuff with json (in this case an array)
-          makeRows(json);
+          var myFiles = JSON.parse(json);
+          makeRows(myFiles);
         },
         error: function() {
           error();
         },
         });
-        */
-        var jsonObj = {"files": [
+        
+        /*var jsonObj = {"files": [
                       {"filename": "file1", "filetype": "text"},
                       {"filename": "file2", "filetype": "image"},
                       {"filename": "file3", "filetype": "multimedia"}]
-                      };
-        var myFiles = JSON.parse(jsonObj);
-        makeRows(myFiles);
+                      }; */
+
         </script>
     </div>
 </div>
