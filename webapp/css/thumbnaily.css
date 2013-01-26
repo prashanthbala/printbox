@@ -6,4 +6,14 @@
 	display: inline-block;
 	*display:inline;
 	float:none;
-	}
+}
+#navbar{
+	margin-bottom:40px;
+}
+#contacts{
+	width:990px;
+	margin:auto;
+}
+#contacts h3{
+	font-size:1.6em;
+}
