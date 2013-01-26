@@ -38,9 +38,11 @@ var error = function(){
 
 
 var print = function(objId){
-    //$("#"+objId).remove();
-    console.log("I GOT HER")
-    console.log($("#row"+objId))
+    var printButton = $("#row"+objId+" a .tblrow button.print");
+    printButton.hide();
+    printButton.text("Print Again");
+    printButton.addClass("btn-primary").removeClass("btn-success");
+    printButton.fadeIn("slow");
     //var whatwewant = search
     if ($(".tblrow").length <= 0) {
         $("#empty").show();
@@ -50,7 +52,24 @@ var print = function(objId){
 }
 
 var del = function(objId){
-    $("#row"+objId).remove();
+    // When displaying "are you sure", add sure class, which you will
+    //  then check for when you delete.
+    var delButton = $("#row"+objId+" a .tblrow button.delete");
+    var delRow = $("#row"+objId)
+
+    if($("#row"+objId+" a .tblrow button.sure").length == 1) {
+        delRow.slideUp("slow", null);
+    } else {
+        delButton.hide();
+        delButton.text("Are you sure?");
+        delButton.addClass("btn-warning sure").removeClass("btn-danger");
+        delButton.fadeIn("slow");
+
+    }
+    //printButton.fadeIn("slow");
+
+
+
     if ($(".tblrow").length <= 0) {
         $("#empty").show();
     }
