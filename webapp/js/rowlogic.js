@@ -7,7 +7,7 @@ var print = printFn; // POST to web interface.
 var del = delRow;
 
 
-var FORGEDATA = true;
+var FORGEDATA = false;
 var fakeData = '[{"path":"cover.jpg","is_dir":false,"mime_type":"image/jpeg"},{"path":"hw1 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw1.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2 solutions.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw2.pdf","is_dir":false,"mime_type":"application/pdf"},{"path":"hw3.pdf","is_dir":false,"mime_type":"application/pdf"}]';
 
 var model = {
@@ -58,6 +58,8 @@ var makeRowsMobile = function(myDocs){
     };
     return;
 
+}
+
 // Initialize the page.
 $(document).ready(function() {
     $.ajaxSetup ({
@@ -65,39 +67,26 @@ $(document).ready(function() {
     });
 
     var serverUrl = "http://printbox.servebeer.com:9000"
-
-    /* $.ajax({
-        url: serverUrl,
-        type: "GET",
-        success: function(json) {
-          populateModel(json);
-        },
-        error: function(err){
-          console.log("oh nooo");
-          console.log(err);
-        }
-    }); */
 }) 
 
 function init() {
     // Populate the model
-
+    if(FORGEDATA == true) {
+        console.log("using forged data...")
+        nextFn(JSON.parse(fakeData));
+    } else {
     $.ajax({
         type: "GET",
         url: "http://printbox.servebeer.com:9000/",
         async: false,
-        /*beforeSend: function(x) {
-            if(x &amp;&amp; x.overrideMimeType) {
-                x.overrideMimeType("application/j-son;charset=UTF-8");
-            }
-        },*/
         dataType: "json",
-        success: nextFn
+        success: nextFn,
+        error: function(err){
+            console.log("Error condition");
+            console.log(err)}
     });
-
-    if(FORGEDATA == true) {
-        nextFn(fakeData);
     }
+
 
     return model;
 }
@@ -113,9 +102,9 @@ function nextFn(jsonString) {
 
 function populateModel(jsonString) {
     console.log("populate!");
-    var fileArray = JSON.parse(jsonString);
+    console.log(jsonString);
+    var fileArray = jsonString;
     console.log("called! got json : " + jsonString);
-    var fileArray = json.parse(jsonString);
 
     console.log(fileArray);
     for(var i = 0; i < fileArray.length; i++) {
@@ -196,7 +185,13 @@ function delRow(rowId){
     var delRow = $("#row"+rowId)
 
     if($("#row"+rowId+" a .tblrow button.sure").length == 1) {
-        delRow.slideUp("slow", null);
+        delRow.slideUp("slow", function() {
+            document.getElementById("row"+rowId).style.display='none';
+            //document.getElementById("row"+rowId).removeChild();
+            console.log($(".tblrow").length);
+            });
+
+        // TODO: remove row from model
     } else {
         delButton.hide();
         delButton.text("Are you sure?");
@@ -206,8 +201,9 @@ function delRow(rowId){
     //printButton.fadeIn("slow");
 
     if ($(".tblrow").length <= 0) {
+        console.log("no more items!");
         $("#empty").show();
     }
-    //document.getElementById(objId).style.display = 'none'; 
+    //
     return;
 }
