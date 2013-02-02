@@ -267,8 +267,7 @@ function printFile(fileId) {
     var file = getRowFromFileId(fileId);
     //console.log(fileId);
     //console.log(file);
-    //console.log("http://printbox.servebeer.com/print/"+
-        andrewId+"/"+file["path"]);
+    //console.log("http://printbox.servebeer.com/print/"+ andrewId+"/"+file["path"]);
     $.ajax({
         type: "POST",
         url: "http://printbox.servebeer.com/print/"+
