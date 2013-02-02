@@ -52,7 +52,7 @@ def main():
 
     # Print using lpr from the command line
         # Set up a printer with no specified user.
-    subprocess.call(['lp', '-U', andrewId, '-d','AndrewGeneric', filepath])
+    subprocess.call(['lp', '-U', andrewId, '-d','andrew_central', filepath])
 
 if __name__ == "__main__":
     main()
