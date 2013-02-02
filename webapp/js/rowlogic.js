@@ -63,7 +63,7 @@ $(document).ready(function() {
       cache: false
     });
 
-    var serverUrl = "http://printbox.servebeer.com:9000"
+    var serverUrl = "http://printbox.servebeer.com/index"
 }) 
 
 function init() {
@@ -74,7 +74,7 @@ function init() {
     } else {
     $.ajax({
         type: "GET",
-        url: "http://printbox.servebeer.com:9000/",
+        url: "http://printbox.servebeer.com/index",
         async: false,
         dataType: "json",
         success: nextFn,
@@ -82,6 +82,7 @@ function init() {
             console.log("Error condition");
             console.log(err)}
     });
+	mixpanel.track("print_page_loggedIn");
     }
 
 
@@ -98,10 +99,10 @@ function nextFn(jsonString) {
 
 
 function populateModel(jsonString) {
-    console.log("populate!");
+    //console.log("populate!");
     console.log(jsonString);
     var fileArray = jsonString;
-    console.log("called! got json : " + jsonString);
+    //console.log("called! got json : " + jsonString);
 
     console.log(fileArray);
     for(var i = 0; i < fileArray.length; i++) {
@@ -145,7 +146,7 @@ function makeRowFn(myDocs){
       }
       document.write("<li id='row" + i.toString() +
                      "'><a href='#'>" + 
-                     "<div class='tblrow'><img class='file-thumbnail' src='icons/" + ftype +
+                     "<div class='tblrow'><img class='file-thumbnail' src='/assets/images/icons/" + ftype +
                      ".jpg'><h5>" + myDocs[i].path + 
                      "</h5><button class='print btn btn-success' type='button' onclick='printFile(\"" +
                      i.toString() + "\")'>Print</button>" +
@@ -194,7 +195,7 @@ function deleteFile(fileId) {
     console.log(file["path"]);
     $.ajax({
         type: "POST",
-        url: "http://printbox.servebeer.com:9000/delete/"+file["path"],
+        url: "http://printbox.servebeer.com/delete/"+file["path"],
         async: false,
         dataType: "json",
         success: function() {console.log("delete sent!")},
@@ -241,31 +242,47 @@ function delListItem(rowId){
     return;
 }
 
-function saveAndrew() {
-    model["andrewId"]=$("#idandrew")[0].value;
+function getAndrew() {
+    var andrewId = $("#idandrew")[0].value;
+    return andrewId;
 }
 
 function printFile(fileId) {
+    var printButton = $("#row"+fileId+" a .tblrow button.print");
+
+    var andrewId = getAndrew();
+
+    if (!andrewId || andrewId.length == 0) {
+        $("#idandrew").focus();
+        $(".alert").alert();
+        return;
+    }
+
+    printButton.addClass("btn").removeClass("btn-success").addClass("btn-primary");
+    printButton.text("Print Again");
+    printButton.fadeIn("slow");
+
     // Send the POST request
     console.log("[print issued]");
     var file = getRowFromFileId(fileId);
     //console.log(fileId);
     //console.log(file);
-    console.log("http://printbox.servebeer.com:9000/print/"+
-        model["andrewId"]+"/"+file["path"]);
+    //console.log("http://printbox.servebeer.com/print/"+
+        andrewId+"/"+file["path"]);
     $.ajax({
         type: "POST",
-        url: "http://printbox.servebeer.com:9000/print/"+
-            model["andrewId"]+"/"+file["path"],
-        async: false,
+        url: "http://printbox.servebeer.com/print/"+
+            andrewId+"/"+file["path"],
+        async: true,
         dataType: "json",
         success: function() {console.log("[print sent!]")},
         error: function(err){
             console.log("something bad in print");
             console.log(err)}
     });
+	mixpanel.track("document_printed", {
+		'andrewId': andrewId
+	});
 
     // Update the model
-
-
 }
