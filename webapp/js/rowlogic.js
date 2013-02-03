@@ -271,7 +271,7 @@ function printFile(fileId) {
     //console.log("http://printbox.servebeer.com/print/"+ andrewId+"/"+file["path"]);
     $.ajax({
         type: "POST",
-        url: "http://printbox.servebeer.com/print/"
+        url: "http://printbox.servebeer.com/print/",
         async: true,
         dataType: "json",
 		data: { 'andrewId' : andrewId, 'filename' : file["path"] },
