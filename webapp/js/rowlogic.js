@@ -275,7 +275,7 @@ function printFile(fileId) {
         async: true,
         dataType: "json",
 		data: { 'andrewId' : andrewId, 'filename' : file["path"] },
-        success: function() {console.log("[print sent!]")},`
+        success: function() {console.log("[print sent!]")},
         error: function(err){
             console.log("something bad in print");
             console.log(err)}
