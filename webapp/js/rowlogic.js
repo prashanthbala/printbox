@@ -195,9 +195,10 @@ function deleteFile(fileId) {
     console.log(file["path"]);
     $.ajax({
         type: "POST",
-        url: "http://printbox.servebeer.com/delete/"+file["path"],
+        url: "http://printbox.servebeer.com/delete",
         async: false,
         dataType: "json",
+		data: { 'filename' : file["path"] },
         success: function() {console.log("delete sent!")},
         error: function(err){
             console.log("something bad");
@@ -270,11 +271,11 @@ function printFile(fileId) {
     //console.log("http://printbox.servebeer.com/print/"+ andrewId+"/"+file["path"]);
     $.ajax({
         type: "POST",
-        url: "http://printbox.servebeer.com/print/"+
-            andrewId+"/"+file["path"],
+        url: "http://printbox.servebeer.com/print/"
         async: true,
         dataType: "json",
-        success: function() {console.log("[print sent!]")},
+		data: { 'andrewId' : andrewId, 'filename' : file["path"] },
+        success: function() {console.log("[print sent!]")},`
         error: function(err){
             console.log("something bad in print");
             console.log(err)}
