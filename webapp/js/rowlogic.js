@@ -3,6 +3,7 @@
 var init = init;
 var makeRows = makeRowFn;
 var error = errorFn; //
+var hostname = "http://printbox.servebeer.com"
 
 
 var FORGEDATA = false;
@@ -62,8 +63,6 @@ $(document).ready(function() {
     $.ajaxSetup ({
       cache: false
     });
-
-    var serverUrl = "http://printbox.servebeer.com/index"
 }) 
 
 function init() {
@@ -74,7 +73,7 @@ function init() {
     } else {
     $.ajax({
         type: "GET",
-        url: "http://printbox.servebeer.com/index",
+        url: hostname + "/index",
         async: false,
         dataType: "json",
         success: nextFn,
@@ -195,10 +194,10 @@ function deleteFile(fileId) {
     console.log(file["path"]);
     $.ajax({
         type: "POST",
-        url: "http://printbox.servebeer.com/delete",
+		url: hostname + "/delete",
         async: false,
         dataType: "json",
-		data: { 'filename' : file["path"] },
+		data: JSON.stringify({ 'filename' : file["path"] }),
         success: function() {console.log("delete sent!")},
         error: function(err){
             console.log("something bad");
@@ -271,10 +270,10 @@ function printFile(fileId) {
     //console.log("http://printbox.servebeer.com/print/"+ andrewId+"/"+file["path"]);
     $.ajax({
         type: "POST",
-        url: "http://printbox.servebeer.com/print/",
+        url: hostname + "/print",
         async: true,
         dataType: "json",
-		data: { 'andrewId' : andrewId, 'filename' : file["path"] },
+		data: JSON.stringify({ 'andrewId' : andrewId, 'filename' : file["path"] }),
         success: function() {console.log("[print sent!]")},
         error: function(err){
             console.log("something bad in print");
